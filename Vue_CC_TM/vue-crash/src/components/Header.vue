@@ -1,55 +1,58 @@
 <template>
-    <header>
-        <h1>
-            <!-- Task Manager  -->
-            {{title}}
-        </h1>
-        <Button v-show="homePage" @btn-click="$emit('toggle-add-task')" :text = "showAddTask ? 'Close' : 'Add Task' " :color = "showAddTask ? 'red' : 'green' "/>
-    </header>
+  <header>
+    <h1>
+      <!-- Task Manager  -->
+      {{ title }}
+    </h1>
+    <Button
+      v-show="homePage"
+      @btn-click="$emit('toggle-add-task')"
+      :text="showAddTask ? 'Close' : 'Add Task'"
+      :color="showAddTask ? 'red' : 'green'"
+    />
+  </header>
 </template>
 
 <script>
-import Button from './Button.vue'
+import Button from "./Button.vue";
 
 export default {
-    name : 'Header',
-    // props : ['title']
+  name: "Header",
+  // props : ['title']
 
-    props :{
-        title : String,
-        showAddTask : Boolean,
+  props: {
+    title: String,
+    showAddTask: Boolean,
+  },
+
+  // props :{
+  //     title : {
+  //         type: String,
+  //         default: 'Default string'
+  //     }
+  // }
+
+  components: {
+    Button,
+  },
+
+  computed: {
+    homePage() {
+      if (this.$route.path === "/") {
+        return true;
+      } else {
+        return false;
+      }
     },
-
-    // props :{
-    //     title : {
-    //         type: String,
-    //         default: 'Default string'
-    //     }
-    // }
-
-    components:{
-        Button
-    },
-
-    computed:{
-        homePage(){
-            if(this.$route.path === '/'){
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-    }
-}
+  },
+};
 </script>
 
 <style scoped>
-    header{
-        display: flex;
-        justify-content: space-between;
-        align-content: center;
-        margin-bottom: 20px;
-    }
+header {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  margin-bottom: 20px;
+}
 </style>

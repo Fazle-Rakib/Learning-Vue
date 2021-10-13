@@ -1,47 +1,50 @@
 <template>
   <div class="container">
-    <Header @toggle-add-task="toggleAddTask" title = "Task Manager " :showAddTask="showAddTask"/>
-   
+    <Header
+      @toggle-add-task="toggleAddTask"
+      title="Task Manager "
+      :showAddTask="showAddTask"
+    />
+
     <router-view :showAddTask="showAddTask"></router-view>
-    <Footer/>
+    <Footer />
     <!-- <Header /> -->
   </div>
 </template>
 
 <script>
-import Header from './components/Header.vue'
-import Footer from './components/Footer.vue'
+import Header from "./components/Header.vue";
+import Footer from "./components/Footer.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Header,
-    Footer
+    Footer,
   },
-  data(){
+  data() {
     return {
-      showAddTask : false
-    }
+      showAddTask: false,
+    };
   },
-  methods:{
-     toggleAddTask(){
+  methods: {
+    toggleAddTask() {
       // console.log(e);
-      this.showAddTask = ! this.showAddTask;
+      this.showAddTask = !this.showAddTask;
     },
   },
-  
-}
+};
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap");
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 .container {
   max-width: 500px;

@@ -1,23 +1,23 @@
 <template>
-    <button @click = "clicked()" class="btn" :style = "{background : color}"> 
-        {{text}}
-    </button>
+  <button @click="clicked()" class="btn" :style="{ background: color }">
+    {{ text }}
+  </button>
 
-    <!-- v-on:click = "clicked()" -->
+  <!-- v-on:click = "clicked()" -->
 </template>
 
 <script>
 export default {
-    name : 'Button',
-    props :{
-        text : String,
-        color: String
+  name: "Button",
+  props: {
+    text: String,
+    color: String,
+  },
+  methods: {
+    clicked() {
+      console.log("Button clicked!");
+      this.$emit("btn-click");
     },
-    methods:{
-        clicked(){
-            console.log('Button clicked!')
-            this.$emit('btn-click');
-        }
-    }
-}
+  },
+};
 </script>
