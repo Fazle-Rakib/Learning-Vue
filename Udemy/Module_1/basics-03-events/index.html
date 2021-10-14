@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Vue Events</h1>
+    </header>
+    <section id="events">
+      <h2>Events in Action</h2>
+      <!-- v-on or shorthand(@) directive is helpful for binding events
+           can call a method like add() or point at it like add  -->
+      <button v-on:click="add">Add</button>
+      <button @click="reduce()">Remove</button>
+
+      <!-- v-once if we want only the initial value of a dynamic content -->
+      <p v-once>Starts with : {{counter}}</p>
+      <p>Result: {{ counter }}</p>
+
+      <!-- want to pass value as a parameter -->
+      <button v-on:click="addParam($event,5)">Add 5</button>
+      <button @click.right="reduceParam(5)">Reduce 5</button>
+      <br />
+      <br />
+
+      <!-- using native event obj($event)  -->
+      <input
+        type="text"
+        v-on:input="setName($event,'Rakib')"
+        v-on:keyup.enter="confirmInput"
+      />
+      <p>Your Name: {{confirmedName}}</p>
+
+      <!-- Data & event binding without simplifier -->
+      <input
+        type="text"
+        v-bind:value="name"
+        v-on:input="setName($event,'Rakib')"
+      />
+      <button @click="resetInput">Reset</button>
+      <p>Two way Your Name: {{name}}</p>
+
+      <!-- Two way binding using v-model equivalent to v-bind:value & v-on:input -->
+      <input type="text" v-model="name" />
+      <button @click="resetInput">Reset</button>
+      <p>v-Model Your Name: {{fullName}}</p>
+
+      <!-- Event modifiers -->
+      <!-- Whenever we submit a form default behavior of browser is to
+      rerender the page/ send a req to server. Now we can prevent 
+      this default behavior with JS; also with vue  -->
+      <form v-on:submit.prevent="submitForm">
+        <input type="text" />
+        <button>Submit</button>
+      </form>
+    </section>
+  </body>
+</html>
