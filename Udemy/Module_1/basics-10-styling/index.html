@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Vue Dynamic Styling</h1>
+    </header>
+    <section id="styling">
+      <!-- :class feature, where we can add class and do some coding
+      though it is not best practice to have logic in html -->
+      <div
+        :class="boxASelected ? 'demo active' : 'demo'"
+        @click="boxSelected('A')"
+      ></div>
+
+      <!-- vue supports :class="{propertyName/CSSCLass : true/false, ...}" obj syntex inside class 
+      to add class dynamically. -->
+      <div
+        :class="{active: boxCSelected}"
+        class="demo"
+        @click="boxSelected('C')"
+      ></div>
+
+      <!-- adding computed property to get rid of upper logics -->
+      <div :class="boxDClasses" class="demo" @click="boxSelected('D')"></div>
+
+      <!-- Multiple class att with array syntex -->
+      <div
+        :class="['demo',{active : boxDSelected}]"
+        @click="boxSelected('D')"
+      ></div>
+
+      <!-- inline style can be added v-bind:style(:style) 
+      Normally, style doesn't fit for obj but Vue v-bind 
+      give us the opprtunity to fit an obj in :style
+      borderColor / 'border-color'
+      Though, It is not best practice to use inline style 
+      -->
+      <div
+        class="demo"
+        :style="{borderColor: boxBSelected ? 'red' : '#ccc'}"
+        @click="boxSelected('B')"
+      ></div>
+    </section>
+  </body>
+</html>
