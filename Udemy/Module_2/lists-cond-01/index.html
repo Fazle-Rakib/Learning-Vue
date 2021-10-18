@@ -50,16 +50,20 @@
         so the dynamic content take the place of removed one not the related data with it
         like(input text), to solve this v-bind:key="u_id" is requied with unique identifier  
        -->
+
+      <!-- don't use v-if and v-for in the same element -->
       <ul v-show="goals.length">
         <li
           v-for="(goal,index) in goals"
           :key="goal"
           @click="removeGoal(index)"
         >
-          <p>
-            {{goal}} -- {{index}}
-            <input type="text" @click.stop />
-          </p>
+          <template v-if="index != 1">
+            <p>
+              {{goal}} -- {{index}}
+              <input type="text" @click.stop />
+            </p>
+          </template>
         </li>
       </ul>
 
