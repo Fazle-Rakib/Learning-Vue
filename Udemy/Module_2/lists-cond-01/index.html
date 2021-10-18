@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Vue Course Goals</h1>
+    </header>
+    <section id="user-goals">
+      <h2>My course goals</h2>
+      <input type="text" v-model="enteredGoal" />
+      <button @click="addGoal">Add Goal</button>
+      <!-- We can pass any truthy or falsy value in the 
+        v-if="boolean/function(return bool)/Conditional statement" statement 
+        v-if,v-else-if
+      -->
+      <p v-if="goals.length === 0">
+        No goals have been added yet - please start adding some!
+      </p>
+      <p v-else-if="goals.length > 0">You have entered minimum one goal</p>
+      <!-- v-show="" will add css style="display:none" if false 
+        v-if or v-show => v-if hides the DOM element on the other hand 
+        v-show switches between css styles, so in-cases the dom element 
+        switches true-false frequently we should use v-show and other cases
+        v-if is more convenient as it includes/removes the dom element
+      -->
+
+      <!-- 
+        v-for iterates over array and obj, v-for="(value,name,index) in object"
+        v-for updates the dom without re-rendering unchanged one
+       -->
+      <!-- <ul v-show="goals.length">
+        <li v-for="(goal,index) in goals" @click="removeGoal(index)">
+          {{goal}} -- {{index}}
+        </li>
+      </ul> -->
+
+      <!-- 
+        vue normally renders the next element in the place of removed one “in-place patch”, 
+        so the dynamic content take the place of removed one not the related data with it
+        like(input text), to solve this v-bind:key="u_id" is requied with unique identifier  
+       -->
+      <ul v-show="goals.length">
+        <li
+          v-for="(goal,index) in goals"
+          :key="goal"
+          @click="removeGoal(index)"
+        >
+          <p>
+            {{goal}} -- {{index}}
+            <input type="text" @click.stop />
+          </p>
+        </li>
+      </ul>
+
+      <!-- outputing numbers-->
+      <!-- <ul>
+        <li v-for="num in 10">{{num }}</li>
+      </ul> -->
+
+      <!-- <ul>
+        <li v-for="(goal,attName,index) in {'name':'Rakib',age: 21}">
+          {{index}} - {{attName}} - {{goal}}
+        </li>
+      </ul> -->
+    </section>
+  </body>
+</html>
