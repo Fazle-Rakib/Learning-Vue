@@ -1,0 +1,57 @@
+<template>
+  <Header></Header>
+  <Form></Form>
+</template>
+
+<script>
+import Form from "./components/Form.vue";
+import Header from "./components/Header.vue";
+export default {
+  name: "App",
+  components: {
+    Form,
+    Header,
+  },
+  data() {},
+  methods: {},
+};
+</script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* text-align: center; */
+  color: #2c3e50;
+  /* margin-top: 60px; */
+}
+.add-form {
+  margin-bottom: 40px;
+}
+.form-control {
+  margin: 20px 0;
+}
+.form-control label {
+  display: block;
+}
+.form-control input {
+  width: 100%;
+  height: 40px;
+  margin: 5px;
+  padding: 3px 7px;
+  font-size: 17px;
+}
+.form-control-check {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.form-control-check label {
+  flex: 1;
+}
+.form-control-check input {
+  flex: 2;
+  height: 20px;
+}
+</style>
