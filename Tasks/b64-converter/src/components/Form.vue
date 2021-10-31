@@ -33,13 +33,22 @@
 console.log("Data");
 const b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-function text2Binary(string) {
+function text2Binary(string, len = 8) {
   return string
     .split("")
     .map((char) => {
-      let binChar = char.charCodeAt(0).toString(2);
-      if (binChar.length % 8 != 0) {
-        binChar = "0".repeat(8 - binChar.length) + binChar;
+      let binChar;
+      if (len == 8) {
+        binChar = char.charCodeAt(0).toString(2);
+      } else {
+        binChar = b64.indexOf(char).toString(2);
+        if (binChar == "-1") {
+          return "";
+        }
+        console.log(char, b64.indexOf(char), binChar);
+      }
+      if (binChar.length % len != 0) {
+        binChar = "0".repeat(len - binChar.length) + binChar;
       }
       return binChar;
     })
@@ -76,9 +85,25 @@ function encodeToB64(text = "what") {
   return encodedText;
 }
 
-// function decodeFromB64(encodedText) {
-//   const binText = text2Binary(encodedText);
-// }
+function decodeFromB64(encodedText) {
+  const binText = text2Binary(encodedText, 6);
+  const formatedBinText = binText.substring(
+    0,
+    Math.floor(binText.length / 8) * 8
+  );
+  const regExLen = /.{8}/g;
+  let text = "";
+  if (formatedBinText == null || formatedBinText == "") {
+    return "";
+  }
+  console.log("String value", formatedBinText);
+  formatedBinText.match(regExLen).map((biString) => {
+    text += String.fromCharCode(parseInt(biString, 2));
+  });
+
+  console.log(binText, formatedBinText, text);
+  return text;
+}
 console.log(encodeToB64());
 
 export default {
@@ -94,7 +119,7 @@ export default {
       this.encodedText = encodeToB64(this.inputText);
     },
     onChangeEncodedText() {
-      //   this.inputText = decodeFromB64(this.encodedText);
+      this.inputText = decodeFromB64(this.encodedText);
     },
   },
 };
@@ -139,18 +164,18 @@ export default {
   outline: none;
   border-radius: 4px;
   resize: none;
-  width: 95%;
+  width: 100%;
   min-height: 400px;
 }
 .flex-item {
-  margin-left: 5px;
+  margin-left: 15px;
   flex: 45%;
 }
 /* .flex-item-right {
   flex: 45%;
 } */
 /* Responsive layout - makes a one column-layout instead of a two-column layout */
-@media (max-width: 500px) {
+@media (max-width: 800px) {
   .flex-item {
     flex: 100%;
   }
@@ -160,9 +185,5 @@ textarea[type="text"]:focus {
   /* border: 3px solid #3cbc8d; */
   /* background-color: #fff; */
   border: 2px solid DodgerBlue;
-}
-::grammar-error {
-  text-decoration: underline red;
-  color: red;
 }
 </style>

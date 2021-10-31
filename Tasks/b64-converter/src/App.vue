@@ -12,7 +12,9 @@ export default {
     Form,
     Header,
   },
-  data() {},
+  data() {
+    return {};
+  },
   methods: {},
 };
 </script>
