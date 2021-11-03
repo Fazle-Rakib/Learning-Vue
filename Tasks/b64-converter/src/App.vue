@@ -1,21 +1,39 @@
 <template>
-  <Header></Header>
-  <Form></Form>
+  <Header
+    headerTitle="Base64 Converter"
+    @toggle-navbar="toggleNavbar"
+    :class="{ slide: showNavbar }"
+  ></Header>
+  <Navbar :navbar="showNavbar" @toggle-navbar="toggleNavbar"></Navbar>
+  <!-- <Form></Form> -->
+  <router-view :class="{ slide: showNavbar }"></router-view>
 </template>
 
 <script>
-import Form from "./components/Form.vue";
+// import Form from "./components/Form.vue";
 import Header from "./components/Header.vue";
+import Navbar from "./components/Navbar.vue";
+// import SshKeyGen from "./components/SshKeyGen.vue";
+
 export default {
   name: "App",
   components: {
-    Form,
+    // Form,
     Header,
+    Navbar,
+    // SshKeyGen,
   },
   data() {
-    return {};
+    return {
+      showNavbar: false,
+    };
   },
-  methods: {},
+  methods: {
+    toggleNavbar() {
+      console.log("Btn-clicked");
+      this.showNavbar = !this.showNavbar;
+    },
+  },
 };
 </script>
 
@@ -28,32 +46,7 @@ export default {
   color: #2c3e50;
   /* margin-top: 60px; */
 }
-.add-form {
-  margin-bottom: 40px;
-}
-.form-control {
-  margin: 20px 0;
-}
-.form-control label {
-  display: block;
-}
-.form-control input {
-  width: 100%;
-  height: 40px;
-  margin: 5px;
-  padding: 3px 7px;
-  font-size: 17px;
-}
-.form-control-check {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.form-control-check label {
-  flex: 1;
-}
-.form-control-check input {
-  flex: 2;
-  height: 20px;
+.slide {
+  margin-left: 250px;
 }
 </style>

@@ -30,7 +30,7 @@
 </template>
 
 <script>
-console.log("Data");
+console.log("From : Form");
 const b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
 function text2Binary(string, len = 8) {
@@ -45,7 +45,7 @@ function text2Binary(string, len = 8) {
         if (binChar == "-1") {
           return "";
         }
-        console.log(char, b64.indexOf(char), binChar);
+        // console.log(char, b64.indexOf(char), binChar);
       }
       if (binChar.length % len != 0) {
         binChar = "0".repeat(len - binChar.length) + binChar;
@@ -79,9 +79,9 @@ function binary2Text(string, len) {
 function encodeToB64(text = "what") {
   // const exText = "Aeio";
   const binText = text2Binary(text);
-  console.log(binText.length, binText);
+  // console.log(binText.length, binText);
   const encodedText = binary2Text(binText, 6);
-  console.log(encodedText);
+  // console.log(encodedText);
   return encodedText;
 }
 
@@ -96,15 +96,15 @@ function decodeFromB64(encodedText) {
   if (formatedBinText == null || formatedBinText == "") {
     return "";
   }
-  console.log("String value", formatedBinText);
+  // console.log("String value", formatedBinText);
   formatedBinText.match(regExLen).map((biString) => {
     text += String.fromCharCode(parseInt(biString, 2));
   });
 
-  console.log(binText, formatedBinText, text);
+  // console.log(binText, formatedBinText, text);
   return text;
 }
-console.log(encodeToB64());
+// console.log(encodeToB64());
 
 export default {
   name: "Form",
