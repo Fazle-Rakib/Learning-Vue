@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Form from "../components/Form.vue";
+import Form from "../components/b64Converter.vue";
 import SshKeyGen from "../components/SshKeyGen.vue";
 const routes = [
   {

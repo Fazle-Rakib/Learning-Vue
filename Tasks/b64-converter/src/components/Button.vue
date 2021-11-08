@@ -1,6 +1,9 @@
 <template>
-  <button @click="clicked()" :style="{ background: color }">
-    <i :class="fontAwesome"> </i>
+  <button
+    @click="clicked()"
+    :style="{ background: color, padding: padLength + 'px' }"
+  >
+    <i :class="fontAwesome"> </i>{{ buttonText }}
   </button>
 </template>
 
@@ -11,6 +14,8 @@ export default {
     color: String,
     fontAwesome: String,
     borderRadius: String,
+    buttonText: String,
+    padLength: Number,
   },
   emits: ["btn-click"],
   methods: {
@@ -33,6 +38,7 @@ button {
   display: inline-block;
   font-size: 15px;
   margin: 14px 5px;
+  /* padding: 20px; */
 }
 button:hover {
   background-color: black;

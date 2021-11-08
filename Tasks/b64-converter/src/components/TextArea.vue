@@ -1,8 +1,8 @@
 <template>
   <textarea
-    id=""
     cols="30"
     rows="10"
+    id=""
     type="text"
     v-model="inputData"
     name="text"
@@ -45,7 +45,7 @@ textarea {
   outline: none;
   border-radius: 4px;
   resize: none;
-  width: 100%;
+  width: 90%;
   min-height: 400px;
 }
 textarea[type="text"]:focus {
