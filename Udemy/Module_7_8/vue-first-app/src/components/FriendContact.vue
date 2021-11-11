@@ -26,17 +26,17 @@ export default {
   // Below is the basic use of emits,
   // but we can also validate custom events
 
-  // emits: ["toggle-fav"],
+  emits: ["toggle-fav"],
 
-  emits: {
-    "toggle-fav": function(id) {
-      if (id) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-  },
+  // emits: {
+  //   "toggle-fav": function(id) {
+  //     if (id) {
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   },
+  // },
 
   // props can be declared as an array of props_name &
   // also can be as an array of obj that can be validated
