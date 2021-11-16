@@ -10,6 +10,21 @@ const routes = [
     component: Home,
   },
   {
+    path: "/Htpasswd",
+    name: "Htpasswd",
+    component: Home,
+  },
+  {
+    path: "/RandomPass",
+    name: "RandomPass",
+    component: Home,
+  },
+  {
+    path: "/BCryptPass",
+    name: "BCryptPass",
+    component: Home,
+  },
+  {
     path: "/b64Converter",
     name: "b64Converter",
     component: b64Converter,
