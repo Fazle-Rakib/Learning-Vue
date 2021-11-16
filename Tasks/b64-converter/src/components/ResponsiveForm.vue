@@ -10,6 +10,7 @@
           <label :for="content.label">{{ content.label }}</label>
         </div>
         <div class="col-75">
+          <!-- Input -->
           <input
             v-if="content.type == 'text'"
             :type="content.type"
@@ -18,19 +19,39 @@
             v-model="formData.parent_id[index]"
             :placeholder="content.placeHolder"
           />
+
+          <!-- Radio -->
           <section
-            v-else
-            v-for="key in content.keySizes"
-            :key="key.value"
+            v-for="option in content.options"
+            :key="option.value"
             style="display: inline; margin-top: 20px"
           >
-            <input
-              type="radio"
-              id="key.value"
-              :value="key.value"
-              v-model="formData.keyBitsLen"
-            />
-            <label for="key.value">{{ key.text }}</label>
+            <template v-if="content.type == 'radio'">
+              <input
+                type="radio"
+                id="option.value"
+                :value="option.value"
+                v-model="formData.parent_id[index]"
+              />
+              <!-- v-model="formData.keyBitsLen" -->
+              <label for="option.value">{{ option.text }}</label>
+            </template>
+          </section>
+
+          <!-- SELECT -->
+          <section v-if="content.type == 'select'">
+            <!-- v-model="formData.selectedOption" -->
+            <select v-model="formData.parent_id[index]">
+              <option disabled value="">Please select one</option>
+
+              <option
+                v-for="option in content.options"
+                :value="option.value"
+                :key="option.text"
+              >
+                {{ option.text }}
+              </option>
+            </select>
           </section>
         </div>
       </div>
@@ -39,27 +60,41 @@
       <button @click="submitted">Generate</button>
     </form>
   </div>
+  <p v-if="!validated">{{ validationMsg }}</p>
+  <!-- <alert-message v-if="!validated" :message="alertMessage"></alert-message> -->
 </template>
 
 <script>
-// import Button from "./Button.vue";
 export default {
   name: "ResponsiveForm",
   components: {},
-  props: { contents: Object },
+  props: { contents: Object, requiredData: Array },
+  emits: ["btn-click"],
   data() {
     return {
+      validated: true,
+      validationMsg: "",
       formData: {
         parent_id: [],
-        keyBitsLen: 2048,
       },
+      values: [],
     };
   },
   methods: {
     submitted(e) {
       e.preventDefault();
-      console.log("Click from Responsive Form!");
-      this.$emit("btn-click", this.formData);
+      this.validated = true;
+      this.contents.forEach((content, index) => {
+        if (content.isRequired && this.validated) {
+          if (this.formData.parent_id[index] == undefined) {
+            this.validated = false;
+            this.validationMsg =
+              "Please fill up the " + content.label + " field";
+          }
+        }
+      });
+
+      if (this.validated) this.$emit("btn-click", this.formData);
     },
   },
 };
