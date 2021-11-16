@@ -1,6 +1,6 @@
 <template>
   <Header
-    headerTitle="Base64 Converter"
+    :headerTitle="headerTitle"
     @toggle-navbar="toggleNavbar"
     :class="{ slide: showNavbar }"
   ></Header>
@@ -25,8 +25,26 @@ export default {
   },
   data() {
     return {
+      allHeaderTitles: {
+        "": "Home",
+        b64Converter: "Base64 Converter",
+        SshKeyGen: "Generate SSH Keys",
+        HashingText: "Generate Message Digest",
+        BCryptPass: "BCrypt Password hashing and Verification",
+        RandomPass: "Strong Random Password Generator",
+        Htpasswd:
+          "Generates an Apache/nginx htpasswd compatible based hash value",
+      },
       showNavbar: false,
+      headerTitle: "Base64 Converter",
     };
+  },
+  watch: {
+    $route() {
+      this.headerTitle = this.allHeaderTitles[this.$route.path.split("/")[1]];
+      console.log(this.$route.path.split("/")[1], this.headerTitle);
+      // if(this.$route.path)
+    },
   },
   methods: {
     toggleNavbar() {
