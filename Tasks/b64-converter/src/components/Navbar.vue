@@ -11,18 +11,30 @@
       >&times;</a
     >
     <router-link tag="link" to="/">
-      <span> <i class="fa fa-cogs"></i> </span> Base64 Converter</router-link
-    >
+      <span> <i class="fa fa-home"></i> </span> Home
+    </router-link>
+    <router-link tag="link" to="/b64Converter">
+      <span> <i class="fa fa-cogs"></i> </span> Base64 Converter
+    </router-link>
     <router-link tag="link" to="/SshKeyGen">
       <i class="fa fa-user-secret" aria-hidden="true"></i> SSH Key Generator
     </router-link>
-    <router-link tag="link" to="#">
+    <router-link tag="link" to="/HashingText">
       <span> <i class="fa fa-shield"></i> </span> Generate Message
       Digest</router-link
     >
-    <router-link tag="link" to="#"
-      ><span><i class="fa fa-bars"></i></span> Hash Value</router-link
-    >
+    <router-link tag="link" to="/BCryptPass"
+      ><span><i class="fa fa-eye-slash"></i></span> BCrypt Password hashing and
+      Verification
+    </router-link>
+
+    <router-link tag="link" to="/RandomPass"
+      ><span><i class="fa fa-random"></i></span> Random Password Generator
+    </router-link>
+
+    <router-link tag="link" to="/Htpasswd"
+      ><span><i class="fa fa-hashtag"></i></span> Httpaswd
+    </router-link>
   </div>
 </template>
 
