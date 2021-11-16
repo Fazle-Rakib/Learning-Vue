@@ -91,7 +91,7 @@ export default {
         {
           label: "RSA Key Size ",
           type: "radio",
-          keySizes: [
+          options: [
             { text: "2048 bits", value: 2048 },
             { text: "4096 bits", value: 4096 },
           ],
@@ -116,8 +116,11 @@ export default {
     async submitted(data) {
       this.isDataReady = false;
       this.isLoading = true;
-      this.keypair = await keyGenerator(data.parent_id, data.keyBitsLen);
-      // console.log(this.keypair);
+      this.keypair = await keyGenerator(
+        data.parent_id,
+        data.parent_id[data.parent_id.length - 1]
+      );
+      console.log(this.data);
       this.isDataReady = true;
       this.isLoading = false;
     },
