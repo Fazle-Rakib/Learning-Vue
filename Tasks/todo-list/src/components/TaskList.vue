@@ -1,11 +1,12 @@
 <template>
+  <loader v-if="!$store.state.isDataReady"></loader>
   <div>
     <ul v-for="(item, index) in $store.state.todoList" :key="index">
       <li
-        :class="[item.checked ? 'checked' : '']"
-        @click="item.checked = !item.checked"
+        :class="[item.completed ? 'checked' : '']"
+        @click="item.completed = !item.completed"
       >
-        {{ item.task }}
+        {{ item.description }}
         <button class="close" @click="$store.dispatch('deleteItem', index)">
           <i class="fa fa-trash" aria-hidden="true"></i>
         </button>
@@ -15,7 +16,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+  components: {
+    loader: require("@/components/Loader.vue").default,
+  },
+  created() {
+    this.$store.dispatch("getAllTasks");
+  },
+};
 </script>
 
 <style scoped>
