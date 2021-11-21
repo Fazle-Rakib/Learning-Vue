@@ -1,13 +1,15 @@
 <template>
   <loader v-if="!$store.state.isDataReady"></loader>
-  <div>
-    <ul v-for="(item, index) in $store.state.todoList" :key="index">
+  <div v-else>
+    <ul>
       <li
+        v-for="(item, index) in $store.state.todoList"
+        :key="index"
         :class="[item.completed ? 'checked' : '']"
-        @click="item.completed = !item.completed"
+        @click="$store.dispatch('updateItem', item['_id'])"
       >
         {{ item.description }}
-        <button class="close" @click="$store.dispatch('deleteItem', index)">
+        <button class="close" @click="todoListItemDelete($event, item['_id'])">
           <i class="fa fa-trash" aria-hidden="true"></i>
         </button>
       </li>
@@ -22,6 +24,18 @@ export default {
   },
   created() {
     this.$store.dispatch("getAllTasks");
+  },
+  methods: {
+    // todoListChecked(index) {
+    //   console.log(this.$store.state.todoList[index].completeted);
+
+    //   this.$store.state.todoList[index].completeted =
+    //     !this.$store.state.todoList[index].completeted;
+    // },
+    todoListItemDelete(event, index) {
+      event.stopPropagation();
+      this.$store.dispatch("deleteItem", index);
+    },
   },
 };
 </script>
@@ -45,7 +59,7 @@ ul li {
   -ms-user-select: none;
   user-select: none;
   border-radius: 2px;
-  /* margin: 0px 0px 5px 0px; */
+  margin: 0px 0px 5px 0px;
 }
 
 /* Darker background-color on hover */

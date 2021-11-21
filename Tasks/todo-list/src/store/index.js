@@ -24,12 +24,15 @@ const authAxios = axios.create({
   },
 });
 
+const headers = {};
+
 export default createStore({
   //store the data of our app
   state: {
     todoList: [],
     taskInput: "",
     isDataReady: true,
+    errorMessage: null,
   },
   // changes the data that are in the state by triggering
   // or commmiting a mutation. We can commit mutaion from
@@ -39,18 +42,31 @@ export default createStore({
     // getAllTaks(state){
     //   state.todoList.
     // },
-    addItem(state) {
-      state.todoList.push({ task: state.taskInput, checked: false });
+    setAllTasks(state, data) {
+      state.todoList = data;
+    },
+    addItem(state, newTask) {
+      state.todoList.push(newTask);
       state.taskInput = "";
+      console.log(state.todoList);
     },
     deleteItem(state, idx) {
-      state.todoList = state.todoList.filter((item, index) => index != idx);
+      state.todoList = state.todoList.filter((item) => item["_id"] != idx);
     },
     setTaskInput(state, newTaskInput) {
       state.taskInput = newTaskInput;
     },
     setIsDataReady(state) {
       state.isDataReady = !state.isDataReady;
+    },
+    errorHandling(state, message) {
+      state.errorMessage = message;
+    },
+    updateItem(state, idx) {
+      const taskId = this.state.todoList.findIndex(
+        (element) => element["_id"] == idx
+      );
+      state.todoList[taskId].completed = !state.todoList[taskId].completed;
     },
   },
   // methods | can't change the data in stage | but can access
@@ -59,20 +75,60 @@ export default createStore({
   actions: {
     async getAllTasks({ commit }) {
       commit("setIsDataReady");
+      // console.log(await axios.get(`${apiUrl}/task`));
       const response = await authAxios(`/task`);
       // console.log("Getting all tasks:", response.data.data);
-      this.state.todoList = response.data.data;
+      commit("setAllTasks", response.data.data);
       commit("setIsDataReady");
     },
-    addItem({ commit }) {
-      commit("addItem");
+    async addItem({ commit }) {
+      commit("setIsDataReady");
+      const newTask = {
+        description: this.state.taskInput,
+      };
+      try {
+        const response = await authAxios.post(`/task`, newTask);
+        commit("addItem", response.data.data);
+      } catch (error) {
+        console.log(error);
+        commit("errorHandling", `Can't add the task. ${error}`);
+        setTimeout(() => {
+          commit("errorHandling", null);
+        }, 2000);
+      }
+      commit("setIsDataReady");
     },
-    deleteItem({ commit }, index) {
+    async deleteItem({ commit }, index) {
+      commit("setIsDataReady");
+
       console.log("In delete action : ", index);
+      const response = await authAxios.delete(`/task/${index}`);
+      console.log(response);
       commit("deleteItem", index);
+      commit("setIsDataReady");
     },
     setTaskInput({ commit }, newValue) {
       commit("setTaskInput", newValue);
+    },
+    async updateItem({ commit }, index) {
+      const findTask = this.state.todoList.find(
+        (element) => element["_id"] == index
+      );
+      console.log(index, findTask);
+      const updatedTask = {
+        completed: !findTask.completed,
+      };
+      try {
+        commit("updateItem", index);
+        const response = await authAxios.put(`/task/${index}`, updatedTask);
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+        commit("errorHandling", `Can't update the task. ${error}`);
+        setTimeout(() => {
+          commit("errorHandling", null);
+        }, 2000);
+      }
     },
   },
   // acces of data | can filter the data that is available to components
