@@ -7,14 +7,16 @@
         <button class="addBtn" @click="$store.dispatch('addItem')">ADD</button>
       </section>
     </section>
-    <div class="errorLog" v-if="$store.state.errorMessage != null">
-      <p>{{ $store.state.errorMessage }}</p>
-    </div>
+    <status-msg></status-msg>
   </div>
 </template>
 
 <script>
+import StatusMsg from "./StatusMsg.vue";
 export default {
+  components: {
+    StatusMsg,
+  },
   computed: {
     taskInput: {
       get() {
@@ -36,14 +38,6 @@ export default {
   color: white;
   text-align: center;
   border-radius: 2px;
-}
-.errorLog {
-  margin: 10px 0px 0px 0;
-  background-color: #e5383b;
-  padding: 5px 20px;
-  color: white;
-  text-align: center;
-  border-radius: 5px;
 }
 
 /* Clear floats after the header */

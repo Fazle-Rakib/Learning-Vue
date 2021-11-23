@@ -17,7 +17,7 @@ axios.interceptors.request.use(
 );
 
 // API centric axios setup | Ideal for all cases
-const authAxios = axios.create({
+const authAxiosBefore = axios.create({
   baseURL: apiUrl,
   headers: {
     authorization: `Bearer ${accessToken}`,
@@ -33,6 +33,7 @@ export default createStore({
     taskInput: "",
     isDataReady: true,
     errorMessage: null,
+    authAxios: null,
   },
   // changes the data that are in the state by triggering
   // or commmiting a mutation. We can commit mutaion from
@@ -76,7 +77,8 @@ export default createStore({
     async getAllTasks({ commit }) {
       commit("setIsDataReady");
       // console.log(await axios.get(`${apiUrl}/task`));
-      const response = await authAxios(`/task`);
+      const response = await this.state.authAxios(`/task`);
+
       // console.log("Getting all tasks:", response.data.data);
       commit("setAllTasks", response.data.data);
       commit("setIsDataReady");
@@ -87,7 +89,7 @@ export default createStore({
         description: this.state.taskInput,
       };
       try {
-        const response = await authAxios.post(`/task`, newTask);
+        const response = await this.state.authAxios.post(`/task`, newTask);
         commit("addItem", response.data.data);
       } catch (error) {
         console.log(error);
@@ -102,7 +104,7 @@ export default createStore({
       commit("setIsDataReady");
 
       console.log("In delete action : ", index);
-      const response = await authAxios.delete(`/task/${index}`);
+      const response = await this.state.authAxios.delete(`/task/${index}`);
       console.log(response);
       commit("deleteItem", index);
       commit("setIsDataReady");
@@ -110,6 +112,7 @@ export default createStore({
     setTaskInput({ commit }, newValue) {
       commit("setTaskInput", newValue);
     },
+
     async updateItem({ commit }, index) {
       const findTask = this.state.todoList.find(
         (element) => element["_id"] == index
@@ -120,7 +123,10 @@ export default createStore({
       };
       try {
         commit("updateItem", index);
-        const response = await authAxios.put(`/task/${index}`, updatedTask);
+        const response = await this.state.authAxios.put(
+          `/task/${index}`,
+          updatedTask
+        );
         console.log(response);
       } catch (error) {
         console.log(error);
@@ -132,7 +138,15 @@ export default createStore({
     },
   },
   // acces of data | can filter the data that is available to components
-  getters: {},
+  getters: {
+    isLoggedIn: (state) => {
+      if (state.authAxios != null) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
   // breakup our store to multiple modules; each separate module have
   // can have it's own [state,mutaions,actions]
   modules: {},
